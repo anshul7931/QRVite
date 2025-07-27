@@ -1,7 +1,10 @@
 package com.anshul.qrvite.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -82,89 +85,44 @@ public class UserDataService {
 
 	public String getDashboardPage(Model model) {
 		
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 String username = authentication.getName(); 
-		 UserData userData = userDataRepository.findByUsername(username);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName(); 
+		UserData userData = userDataRepository.findByUsername(username);
+		
+		model.addAttribute("username", userData.getUsername().toUpperCase());
 		 
-		 model.addAttribute("username", userData.getUsername().toUpperCase());
-		 
-		 List<DashboardViewDTO> cards = new ArrayList<>();
-
-		    
-
-		    cards.add(new DashboardViewDTO(
-		        "Marriage Invite 1",
-		        "Generate Marriage Invitation 1 quickly for testing.",
-		        "/mockup/marriageInvite1",
-		        false
-		    ));
-
-		    cards.add(new DashboardViewDTO(
-		        "Marriage Invite 2",
-		        "Generate Marriage Invitation 2 quickly for testing.",
-		        "/mockup/marriageInvite2",
-		        false
-		    ));
-
-		    cards.add(new DashboardViewDTO(
-		        "Instagram Card",
-		        "Generate Instagram optimized invite card dynamically.",
-		        "/mockup/socialmedia/marriageInvite1",
-		        false
-		    ));
-
-		    
-
-		 
-		 if(userData.getRole().equalsIgnoreCase(pageConstants.ROLE_ADMIN)) {
- 			 cards.add(new DashboardViewDTO(
-		         "Get All Users from Java",
-		         "View and manage all registered users in the system efficiently.",
-		         "/admin/getAllUsers",
- 		         false
- 		     ));
- 
-		     cards.add(new DashboardViewDTO(
-		         "Swagger API Docs",
-		         "Explore and test all REST APIs interactively using Swagger.",
-		         "/swagger-ui/index.html",
-		         true
-		     ));
-		     
-		     cards.add(new DashboardViewDTO(
-			         "Actuator",
-			         "Explore and test all REST APIs interactively using Swagger.",
-			         "/actuator",
-			         true
-			 ));
-		     
-		     cards.add(new DashboardViewDTO(
-			         "Health",
-			         "Explore and test all REST APIs interactively using Swagger.",
-			         "/actuator/health",
-			         true
-			  ));
-		     cards.add(new DashboardViewDTO(
-			         "Info",
-			         "Explore and test all REST APIs interactively using Swagger.",
-			         "/actuator/info",
-			         true
-			  ));
-		     cards.add(new DashboardViewDTO(
-			         "Promethus",
-			         "Explore and test all REST APIs interactively using Swagger.",
-			         "/actuator/prometheus",
-			         true
-			 ));
-			 model.addAttribute("cards", cards);
-			 return pageConstants.DASHBOARD_PAGE_ADMIN;
+		Map<String, List<DashboardViewDTO>> categorizedCards = new LinkedHashMap<>();
+	
+		categorizedCards.put("Wedding Cards", Arrays.asList(
+		    new DashboardViewDTO("Marriage Invite 1", "Generate Marriage Invitation 1 quickly.", "/mockup/marriageInvite1", false),
+		    new DashboardViewDTO("Marriage Invite 2", "Elegant marriage card design.", "/mockup/marriageInvite2", false),
+		    new DashboardViewDTO("Marriage Invite 3", "Elegant marriage card design.", "/mockup/socialmedia/marriageInvite1", false)
+		));
+	
+		
+	
+		
+		if(userData.getRole().equalsIgnoreCase(pageConstants.ROLE_ADMIN)) {
+			
+			categorizedCards.put("Actuators", Arrays.asList(
+				    new DashboardViewDTO("Actuator", "View user login activity.", "/actuator", true),
+				    new DashboardViewDTO("Health", "Check system-level logs.", "/actuator/health", true),
+				    new DashboardViewDTO("Info", "View user login activity.", "/actuator/info", true),
+				    new DashboardViewDTO("Promethus", "Check system-level logs.", "/actuator/prometheus", true)
+			));
+			
+			categorizedCards.put("Admin APIs", Arrays.asList(
+				    new DashboardViewDTO("All User Data", "View user login activity.", "/admin/getAllUsers", false),
+				    new DashboardViewDTO("Swagger", "Check system-level logs.", "/swagger-ui/index.html", true)
+			));
+			
+			model.addAttribute("categorizedCards", categorizedCards);
+			return pageConstants.DASHBOARD_PAGE_ADMIN;
 		 }else {
-			 model.addAttribute("cards", cards);
+			 model.addAttribute("categorizedCards", categorizedCards);
 			 return pageConstants.DASHBOARD_PAGE; // maps to dashboard.html in /templates
-		 }
+		}
 	}
-	
-	
 	
 
 }

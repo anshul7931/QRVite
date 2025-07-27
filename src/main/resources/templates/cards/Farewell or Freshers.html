@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fresher & Farewell Party Invitation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(270deg, #001f3f, #004080, #0074d9, #0059b3);
+      background-size: 800% 800%;
+      animation: gradientShift 20s ease infinite;
+      color: #dce6f1;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .card {
+      background: rgba(10, 25, 50, 0.95);
+      border-radius: 20px;
+      box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(0, 116, 217, 0.7);
+      padding: 50px 40px;
+      max-width: 650px;
+      width: 100%;
+      text-align: center;
+      color: #dce6f1;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .photo {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid #0074d9;
+      margin-bottom: 30px;
+      box-shadow: 0 0 15px #0074d9;
+      transition: transform 0.3s ease;
+    }
+    .photo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00aaff;
+    }
+
+    h1 {
+      color: #00aaff;
+      font-size: 2.8em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #00aaffaa;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.3em;
+      color: #aad4ff;
+      margin-bottom: 30px;
+      font-style: italic;
+      letter-spacing: 0.06em;
+    }
+
+    .event-name {
+      font-size: 1.9em;
+      font-weight: 700;
+      color: #0074d9;
+      margin-bottom: 40px;
+      text-shadow: 0 0 8px #005f9eaa;
+    }
+
+    .info {
+      font-size: 1.1em;
+      color: #c0d6ff;
+      line-height: 1.9;
+      margin-bottom: 35px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .info strong {
+      color: #00b0ff;
+    }
+
+    .location a {
+      color: #00b0ff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .location a:hover {
+      color: #66c7ff;
+      text-decoration: underline;
+    }
+
+    .schedule {
+      margin: 50px 0;
+      text-align: left;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .schedule h2 {
+      text-align: center;
+      color: #00aaff;
+      font-size: 1.7em;
+      margin-bottom: 30px;
+      text-shadow: 0 0 8px #00aaffbb;
+      font-weight: 700;
+    }
+
+    .timeline {
+      border-left: 3px solid #00aaff;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .event-item {
+      position: relative;
+      margin-bottom: 35px;
+      padding-left: 35px;
+      font-size: 1.1em;
+      line-height: 1.5;
+      color: #c0d6ff;
+    }
+
+    .event-item::before {
+      content: "🎉";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      font-size: 1.5em;
+      text-shadow: 0 0 6px #00aaffcc;
+    }
+
+    .event-item strong {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #66c7ff;
+    }
+
+    .rsvp {
+      font-size: 1em;
+      color: #aacfff;
+      line-height: 1.6;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .rsvp a {
+      color: #00b0ff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .rsvp a:hover {
+      color: #66c7ff;
+      text-decoration: underline;
+    }
+
+    .qr {
+      margin-top: 25px;
+      text-align: center;
+    }
+    .qr img {
+      width: 110px;
+      height: 110px;
+      border-radius: 14px;
+      box-shadow: 0 0 18px #00aaffbb;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .qr img:hover {
+      box-shadow: 0 0 30px #33bbffdd;
+    }
+    .qr p {
+      font-size: 0.9em;
+      color: #89bfff;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .footer {
+      margin-top: 45px;
+      font-size: 0.85em;
+      color: #aacfff;
+      font-style: italic;
+      user-select: none;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 40px 25px;
+      }
+      .info, .schedule, .rsvp {
+        max-width: 100%;
+        padding: 0 15px;
+      }
+      .event-item {
+        font-size: 1em;
+        padding-left: 30px;
+      }
+      .event-item::before {
+        left: -5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img
+      class="photo"
+      src="https://via.placeholder.com/130x130.png?text=🎓"
+      alt="Party Photo"
+    />
+
+    <h1>You're Invited!</h1>
+    <div class="subtitle">Join us for an unforgettable</div>
+
+    <div class="event-name">Fresher & Farewell Party 2025</div>
+
+    <div class="info">
+      📅 <strong>Date:</strong> Friday, September 12, 2025<br />
+      🕗 <strong>Time:</strong> 7:00 PM onwards<br />
+      📍 <strong>Venue:</strong> Sapphire Banquet Hall<br />
+      <div class="location">
+        <a
+          href="https://maps.google.com/?q=Sapphire+Banquet+Hall+City+Center"
+          target="_blank"
+          >123 Celebration Ave, City Center</a
+        >
+      </div>
+    </div>
+
+    <div class="schedule">
+      <h2>Party Schedule</h2>
+      <div class="timeline">
+        <div class="event-item">
+          <strong>7:00 PM – Welcome Drinks & Mingling</strong>
+          Kick off the evening with cocktails and ice-breakers.
+        </div>
+        <div class="event-item">
+          <strong>8:00 PM – Dance Floor Opens</strong>
+          DJ spins your favorite hits to keep the energy high.
+        </div>
+        <div class="event-item">
+          <strong>9:30 PM – Games & Fun Activities</strong>
+          Exciting games and prizes for everyone.
+        </div>
+        <div class="event-item">
+          <strong>10:30 PM – Speeches & Memories</strong>
+          Toasts and heartfelt messages from seniors & freshers.
+        </div>
+        <div class="event-item">
+          <strong>11:00 PM – Late Night Snacks & Chill</strong>
+          Enjoy delicious snacks while unwinding.
+        </div>
+      </div>
+    </div>
+
+    <div class="rsvp">
+      Kindly RSVP by August 30, 2025<br />
+      📧 Email:
+      <a href="mailto:party.rsvp@example.com">party.rsvp@example.com</a><br />
+      ☎ Phone: (555) 123-4567
+    </div>
+
+    <div class="qr">
+      <img
+        src="https://via.placeholder.com/110x110.png?text=QR+Code"
+        alt="QR Code for RSVP or Party Info"
+      />
+      <p>Scan to RSVP or view party details</p>
+    </div>
+
+    <div class="footer">
+      Let’s make memories that last forever! 🎉
+    </div>
+  </div>
+</body>
+</html>

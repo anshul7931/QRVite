@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding Invitation</title>
+  <style>
+    body {
+	  margin: 0;
+	  padding: 0;
+	  background: linear-gradient(135deg, #fff0f5, #e0c3fc);
+	  font-family: 'Georgia', serif;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  min-height: 100vh;    /* changed */
+	  overflow-y: auto;     /* added */
+	}
+
+	@media (max-width: 400px) {
+	  .card {
+	    padding: 20px 15px;
+	  }
+	}
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 45px 35px;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .photo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #da70d6;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #b03060;
+      font-size: 2.2em;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #666;
+      margin-top: 5px;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+
+    .couple {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #4b0082;
+    }
+
+    .info {
+      font-size: 1em;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .info strong {
+      color: #222;
+    }
+
+    .location a {
+      color: #9932cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .location a:hover {
+      text-decoration: underline;
+    }
+
+    .rsvp {
+      font-size: 0.95em;
+      color: #555;
+      line-height: 1.6;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .qr {
+      margin-top: 10px;
+    }
+
+    .qr img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .qr p {
+      font-size: 0.85em;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 0.85em;
+      color: #999;
+    }
+    .hashtag {
+	    font-size: 22px; /* Slightly increased */
+	    font-style: italic;
+	    font-weight: 500;
+	    color: #8b5e3c;
+	    letter-spacing: 1px;
+	    margin: 6px 0 12px 0; /* Balanced top and bottom spacing */
+	}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img class="photo" th:src="${photoUrl}" alt="Couple Photo">
+
+    <h1>You’re Invited!</h1>
+    <div class="subtitle">To the wedding celebration of</div>
+
+    <div class="couple" th:text="${coupleName}">Couple Name</div>
+    <p th:if="${hashtag != null}" class="hashtag" th:text="${hashtag}"></p>
+
+    <div class="info">
+      💍 <strong>Date:</strong> <span th:text="${date}">Date</span><br>
+      🕔 <strong>Time:</strong> <span th:text="${time}">Time</span><br>
+      📍 <strong>Venue:</strong> <span th:text="${venue}">Venue</span><br>
+      <div class="location">
+        <a th:href="@{${mapUrl}}" target="_blank" th:text="${address}">Address</a>
+      </div>
+    </div>
+
+    <div class="rsvp">
+      Kindly RSVP by <span th:text="${rsvpDate}">RSVP Date</span><br>
+      📧 Email: <a th:href="'mailto:' + ${email}" th:text="${email}">Email</a><br>
+      ☎ Phone: <span th:text="${phone}">Phone</span>
+    </div>
+
+    <div class="qr">
+      <img th:src="@{/generate-qr(data=${qrData}, size=300,color=bw)}" alt="QR Code for RSVP or Wedding Site">
+      <p>Scan for RSVP or more details</p>
+    </div>
+
+    <div class="footer" th:text="${footerText}">
+      We can’t wait to celebrate this special day with you 💕
+    </div>
+  </div>
+</body>
+</html>

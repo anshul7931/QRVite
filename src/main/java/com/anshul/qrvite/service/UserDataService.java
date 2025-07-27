@@ -130,6 +130,32 @@ public class UserDataService {
 		         "/swagger-ui/index.html",
 		         true
 		     ));
+		     
+		     cards.add(new DashboardViewDTO(
+			         "Actuator",
+			         "Explore and test all REST APIs interactively using Swagger.",
+			         "/actuator",
+			         true
+			 ));
+		     
+		     cards.add(new DashboardViewDTO(
+			         "Health",
+			         "Explore and test all REST APIs interactively using Swagger.",
+			         "/actuator/health",
+			         true
+			  ));
+		     cards.add(new DashboardViewDTO(
+			         "Info",
+			         "Explore and test all REST APIs interactively using Swagger.",
+			         "/actuator/info",
+			         true
+			  ));
+		     cards.add(new DashboardViewDTO(
+			         "Promethus",
+			         "Explore and test all REST APIs interactively using Swagger.",
+			         "/actuator/prometheus",
+			         true
+			 ));
 			 model.addAttribute("cards", cards);
 			 return pageConstants.DASHBOARD_PAGE_ADMIN;
 		 }else {

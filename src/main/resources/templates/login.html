@@ -148,12 +148,11 @@
 			    <div class="mb-3">
 			        <label for="fp-security-question" class="form-label">Security Question</label>
 			        <select id="fp-security-question" name="securityQuestion" class="form-select" required>
-			            <option value="" disabled selected>Select your security question</option>
-			            <option value="pet">What is your pet's name?</option>
-			            <option value="birthplace">What is your birthplace?</option>
-			            <option value="school">What was the name of your first school?</option>
-			            <option value="favouriteFood">What is your favourite food?</option>
-			        </select>
+					    <option value="" disabled selected>Select your security question</option>
+					    <th:block th:each="entry : ${securityQuestions}">
+					        <option th:value="${entry.key}" th:text="${entry.value}"></option>
+					    </th:block>
+					</select>
 			    </div>
 			    <div class="mb-3">
 			        <label for="fp-security-answer" class="form-label">Security Answer</label>

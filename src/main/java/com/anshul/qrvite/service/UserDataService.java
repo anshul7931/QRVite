@@ -38,6 +38,7 @@ public class UserDataService {
         errorMsg = validateSignUpData(userDataDTO,model);
         if(!errorMsg.equals("")) {
         	 model.addAttribute("error", errorMsg);
+        	 model.addAttribute("securityQuestions", pageConstants.getQuestions());
              return pageConstants.SIGNUP_PAGE;
         }
 

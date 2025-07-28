@@ -66,16 +66,15 @@
             </div>
 
             <div class="mb-3">
-                <label for="securityQuestion" class="form-label">Security Question</label>
-                <select th:field="*{securityQuestion}" id="securityQuestion" class="form-select">
-                    <option value="" disabled>Select a security question</option>
-                    <option value="pet">What is your pet's name?</option>
-                    <option value="birthplace">What is your birthplace?</option>
-                    <option value="school">What was the name of your first school?</option>
-                    <option value="favouriteFood">What is your favourite food?</option>
-                </select>
-                <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
-            </div>
+			    <label for="securityQuestion" class="form-label">Security Question</label>
+			    <select th:field="*{securityQuestion}" id="securityQuestion" class="form-select" required>
+			        <option th:each="entry : ${securityQuestions}" th:value="${entry.key}" th:text="${entry.value}">
+			        </option>
+			    </select>
+			
+			    <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
+			</div>
+
 
             <div class="mb-3">
                 <label for="securityAnswer" class="form-label">Security Answer</label>

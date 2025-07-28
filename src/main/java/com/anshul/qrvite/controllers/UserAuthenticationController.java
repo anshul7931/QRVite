@@ -29,16 +29,19 @@ public class UserAuthenticationController {
 	UserDataService userDataService;
 	
 	@GetMapping("/login")
-    public String login(Authentication authentication) {
+    public String login(Model model,Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {//If user token is still valid
         	String username = authentication.getName(); 
    		 	UserData userData = userDataRepository.findByUsername(username);
+
         	if(userData.getRole().equalsIgnoreCase(pageConstants.ROLE_ADMIN)) {
 	   			 return pageConstants.REDIRECT_IF_ALREADY_LOGGED_IN_ADMIN;
 	   		 }else {
 	   			 return pageConstants.REDIRECT_IF_ALREADY_LOGGED_IN_USER; 
 	   		 }
         }
+	    model.addAttribute("securityQuestions", pageConstants.getQuestions());
+	    model.addAttribute("showForgotModal", false); // default false
         return pageConstants.LOGIN_PAGE;
     }
 	
@@ -46,6 +49,7 @@ public class UserAuthenticationController {
 	@GetMapping("/signup")
     public String showSignUpForm(Model model) {
         model.addAttribute("userDataDTO", new UserDataDTO());
+        model.addAttribute("securityQuestions", pageConstants.getQuestions());
         return pageConstants.SIGNUP_PAGE;
     }
 

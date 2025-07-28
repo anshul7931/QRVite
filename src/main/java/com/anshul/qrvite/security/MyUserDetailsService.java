@@ -22,9 +22,10 @@ public class MyUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 			UserData userData = userDataRepository.findByUsername(username);
+			
 			return new User(userData.getUsername(),
 					userData.getPassword(),
-					Arrays.asList(new SimpleGrantedAuthority(userData.getRole()))
+					Arrays.asList(new SimpleGrantedAuthority("ROLE_" + userData.getRole()))
 			);
 		
 	}

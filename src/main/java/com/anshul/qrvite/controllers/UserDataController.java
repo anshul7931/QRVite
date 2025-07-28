@@ -3,6 +3,8 @@ package com.anshul.qrvite.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +30,11 @@ public class UserDataController {
 	//Test Sign Up, Forgot Password, Sign In
 	//Add security questions as constants
 	//Git hub, BCrypt, JWT
-	//Dashboard using Thymeleaf Layout
 	//getCardsForUser - hasMarriageCard, hasBirthdayCard,hasCorporateEventCard,hasFarewellOrFresherCard,id,username,password,role
+	//Add Card expiry dates
 	//Card - expiry, created date, qr size, qr color
 	//Login - UI Validation for wrong password
 	//Forgot Password - Test after Sign Up, Update method in controller with less lines(Modularize in service)
-	//Add Card expiry dates
 	//MyUserDetailService Exception Handle on wrong login
 	//User Admin getRole() check and differentiate
 	//QR modify for center logo
@@ -44,6 +45,11 @@ public class UserDataController {
 	@ResponseBody
 	public List<UserData> getAllUsers(){
 		return userDataRepository.findAll();
+	}
+	
+	@GetMapping("/admin/test")
+	public ResponseEntity<String> adminTest(Authentication auth) {
+	    return ResponseEntity.ok("Authorities: " + auth.getAuthorities().toString());
 	}
 	
 	 @GetMapping("/")

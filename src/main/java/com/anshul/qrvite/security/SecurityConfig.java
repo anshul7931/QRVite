@@ -25,15 +25,18 @@ public class SecurityConfig {
 	    http.csrf(customizer -> customizer.disable());
 	    
 	    http.authorizeHttpRequests(request -> request.antMatchers(
-	    	        "/v3/api-docs/**",
-	    	        "/swagger-ui/**",
-	    	        "/swagger-ui.html",
-	    	        "/swagger-resources/**",
-	    	        "/webjars/**",
 	    	        "/signup",
 	    	        "/forgot-password"
 	    	    ).permitAll()
-//	            .antMatchers("/admin/**").hasRole("ADMIN")
+	            .antMatchers(
+	            		"/admin/**",
+	            		"/v3/api-docs/**",
+		    	        "/swagger-ui/**",
+		    	        "/swagger-ui.html",
+		    	        "/swagger-resources/**",
+		    	        "/webjars/**",
+		    	        "/actuator/*")
+	            .hasRole("ADMIN")
 //	            .antMatchers("/user/**").hasRole("USER")
 	    	    .anyRequest()
 	    	    .authenticated()// Require authentication for all other endpoints

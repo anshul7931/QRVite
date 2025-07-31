@@ -36,6 +36,8 @@ public class CardMockupController {
 	        model.addAttribute("email", "weddingrsvp@example.com");
 	        model.addAttribute("phone", "(321) 654-9870");
 	        model.addAttribute("qrData", "https://via.placeholder.com/100x100.png?text=QR+Code");
+	        model.addAttribute("qrSize", "300");
+	        model.addAttribute("qrColor", "bw");
 	        model.addAttribute("footerText", "We can’t wait to celebrate this special day with you 💕");
 
 	        return pageConstants.WEDDING_TEMPLATE1;
@@ -78,6 +80,8 @@ public class CardMockupController {
 	        model.addAttribute("email", "sophia.michael.wedding@example.com");
 	        model.addAttribute("phone", "(987) 654-3210");
 	        model.addAttribute("qrData", "google.com");
+	        model.addAttribute("qrSize", "300");
+	        model.addAttribute("qrColor", "bw");
 	        model.addAttribute("footerText", "Together with our families, we look forward to celebrating with you 💕");
 
 	        return pageConstants.WEDDING_TEMPLATE2;
@@ -96,6 +100,8 @@ public class CardMockupController {
 			model.addAttribute("email", "weddingrsvp@example.com");
 			model.addAttribute("phone", "(321) 654-9870");
 			model.addAttribute("qrData", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.google.com/?q=Rose+Garden+Hall+Los+Angeles");
+			model.addAttribute("qrSize", "300");
+	        model.addAttribute("qrColor", "gradient");
 			model.addAttribute("footerText", "We can’t wait to celebrate this special day with you 💕");
 
 	        return pageConstants.WEDDING_TEMPLATE3;

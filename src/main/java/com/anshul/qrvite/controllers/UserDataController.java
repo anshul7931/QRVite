@@ -28,15 +28,14 @@ public class UserDataController {
 	PageConstants pageConstants;
 		
 	//Test Sign Up, Forgot Password, Sign In
-	//Add security questions as constants
+	//Add security questions as constants - Verify the compelete flow once. Sign Up default question is not selecting
 	//Git hub, BCrypt, JWT
 	//getCardsForUser - hasMarriageCard, hasBirthdayCard,hasCorporateEventCard,hasFarewellOrFresherCard,id,username,password,role
-	//Add Card expiry dates
+	//Card Types table, a user can have multiple card types - Add this static Data in DB
 	//Card - expiry, created date, qr size, qr color
 	//Login - UI Validation for wrong password
 	//Forgot Password - Test after Sign Up, Update method in controller with less lines(Modularize in service)
 	//MyUserDetailService Exception Handle on wrong login
-	//User Admin getRole() check and differentiate
 	//QR modify for center logo
 	//Login->Logout->Sign Up-> Back Button is opening Dashboard instead of Login
 	
@@ -45,11 +44,6 @@ public class UserDataController {
 	@ResponseBody
 	public List<UserData> getAllUsers(){
 		return userDataRepository.findAll();
-	}
-	
-	@GetMapping("/admin/test")
-	public ResponseEntity<String> adminTest(Authentication auth) {
-	    return ResponseEntity.ok("Authorities: " + auth.getAuthorities().toString());
 	}
 	
 	 @GetMapping("/")

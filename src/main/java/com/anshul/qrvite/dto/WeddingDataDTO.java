@@ -18,6 +18,8 @@ public class WeddingDataDTO {
 	private String email;
 	private String phone;
 	private String qrData;
+	private String qrSize;
+	private String qrColor;
 	private String footerText;
 	private List<WeddingEventsDTO> weddingEventsListDto;
 	private String hasEvents;
@@ -27,7 +29,18 @@ public class WeddingDataDTO {
 	private Date expiry_date;
 	
 	
-	
+	public String getQrSize() {
+		return qrSize;
+	}
+	public void setQrSize(String qrSize) {
+		this.qrSize = qrSize;
+	}
+	public String getQrColor() {
+		return qrColor;
+	}
+	public void setQrColor(String qrColor) {
+		this.qrColor = qrColor;
+	}
 	public Date getCreated_date() {
 		return created_date;
 	}

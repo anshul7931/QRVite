@@ -11,8 +11,7 @@ public class PageConstants {
     public final String LOGIN_PAGE = "login";
     public final String DASHBOARD_PAGE = "dashboard_user";
     public final String DASHBOARD_PAGE_ADMIN = "dashboard_admin"; //admin_dashboard
-    public final String REDIRECT_IF_ALREADY_LOGGED_IN_USER = "redirect:/".concat(DASHBOARD_PAGE);
-    public final String REDIRECT_IF_ALREADY_LOGGED_IN_ADMIN = "redirect:/".concat(DASHBOARD_PAGE);
+    public final String REDIRECT_IF_ALREADY_LOGGED_IN = "redirect:/dashboard";
     public final String SIGNUP_PAGE = "signup";
     public final String ERROR_404_PAGE = "error";
     public final String WEDDING_TEMPLATE3="cards/wedding/Wedding Event3";

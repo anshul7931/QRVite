@@ -32,12 +32,14 @@ public class UserDataController {
 	//Git hub, BCrypt, JWT
 	//getCardsForUser - hasMarriageCard, hasBirthdayCard,hasCorporateEventCard,hasFarewellOrFresherCard,id,username,password,role
 	//Card Types table, a user can have multiple card types - Add this static Data in DB
-	//Card - expiry, created date, qr size, qr color
+	//Card - expiry, created date
 	//Login - UI Validation for wrong password
 	//Forgot Password - Test after Sign Up, Update method in controller with less lines(Modularize in service)
 	//MyUserDetailService Exception Handle on wrong login
 	//QR modify for center logo
 	//Login->Logout->Sign Up-> Back Button is opening Dashboard instead of Login
+	//Dashboard is loading after logout and back button click
+	//Login as admin, click back -> 404
 	
 	//TODO Remove this UserDetail API - Create DTO
 	@GetMapping("/admin/getAllUsers")
@@ -47,12 +49,20 @@ public class UserDataController {
 	}
 	
 	 @GetMapping("/")
-     public String home(Model model) {
-		 return userDataService.getDashboardPage(model);	 
+     public String home(Model model,Authentication authentication) {
+		 if (authentication != null && authentication.isAuthenticated()) {
+				return userDataService.getDashboardPage(model);	
+			}else {
+				return pageConstants.LOGIN_PAGE;
+			} 
      }
 	
 	@GetMapping("/dashboard")
-    public String dashboard(Model model) {
-		return userDataService.getDashboardPage(model);	
+    public String dashboard(Model model,Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			return userDataService.getDashboardPage(model);	
+		}else {
+			return pageConstants.LOGIN_PAGE;
+		}
     }
 }

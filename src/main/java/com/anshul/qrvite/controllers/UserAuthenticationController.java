@@ -30,16 +30,11 @@ public class UserAuthenticationController {
 	
 	@GetMapping("/login")
     public String login(Model model,Authentication authentication) {
+		//If user is on dashboard and clicks back, he should not navigate to login screen
         if (authentication != null && authentication.isAuthenticated()) {//If user token is still valid
-        	String username = authentication.getName(); 
-   		 	UserData userData = userDataRepository.findByUsername(username);
-
-        	if(userData.getRole().equalsIgnoreCase(pageConstants.ROLE_ADMIN)) {
-	   			 return pageConstants.REDIRECT_IF_ALREADY_LOGGED_IN_ADMIN;
-	   		 }else {
-	   			 return pageConstants.REDIRECT_IF_ALREADY_LOGGED_IN_USER; 
-	   		 }
+   		 	return pageConstants.REDIRECT_IF_ALREADY_LOGGED_IN; 
         }
+        
 	    model.addAttribute("securityQuestions", pageConstants.getQuestions());
 	    model.addAttribute("showForgotModal", false); // default false
         return pageConstants.LOGIN_PAGE;
@@ -70,6 +65,7 @@ public class UserAuthenticationController {
         UserData userData = userDataRepository.findByUsername(username);
         
         if (userData == null) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
             model.addAttribute("forgotPasswordError", "User not found.");
             model.addAttribute("showForgotModal", true);
             return "login";
@@ -77,12 +73,14 @@ public class UserAuthenticationController {
 
         if (!userData.getSecurityQuestion().equalsIgnoreCase(securityQuestion) ||
             !userData.getSecurityAnswer().equalsIgnoreCase(securityAnswer)) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
             model.addAttribute("forgotPasswordError", "Security question/answer do not match.");
             model.addAttribute("showForgotModal", true);
             return "login";
         }
 
         if (!newPassword.equals(confirmNewPassword)) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
             model.addAttribute("forgotPasswordError", "Passwords did not match.");
             model.addAttribute("showForgotModal", true);
             return "login";

@@ -1,5 +1,6 @@
 package com.anshul.qrvite.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -122,18 +123,27 @@ public class UserDataService {
 	}
 
 
+	//To Be Tested
 	private String validatePassword(String password) {
-		if(password.length()<8) {
-        	return "Minimum length of password is 8";
-        }
-		if(!password.contains("@")) {
-			return "Password must contain @";
-		}
-		
-		//Password must contain a 
-		//On /forgot-password api call, /login should be called
-        
-		return "";
+	    List<String> errors = new ArrayList<>();
+
+	    if (password.length() < 8) {
+	        errors.add("Password must be at least 8 characters long");
+	    }
+	    if (!password.matches(".*[A-Z].*")) {
+	        errors.add("Password must contain at least one uppercase letter");
+	    }
+	    if (!password.matches(".*[a-z].*")) {
+	        errors.add("Password must contain at least one lowercase letter");
+	    }
+	    if (!password.matches(".*\\d.*")) {
+	        errors.add("Password must contain at least one digit");
+	    }
+	    if (!password.matches(".*[@#$%^&+=!()._].*")) {
+	        errors.add("Password must contain at least one special character (@#$%^&+=!()._)");
+	    }
+	   
+	    return errors.size()==0? "" : String.join(", ", errors);
 	}
 	/* Post Login */
 

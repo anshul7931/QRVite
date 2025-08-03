@@ -52,7 +52,6 @@ public class UserDataService {
         user.setSecurityQuestion(userDataDTO.getSecurityQuestion());
         user.setSecurityAnswer(userDataDTO.getSecurityAnswer());
         user.setPassword(passwordEncoder.encode(userDataDTO.getPassword()));
-//        user.setPassword(userDataDTO.getPassword());
         user.setRole("USER");
 
         userDataRepository.save(user);
@@ -60,33 +59,21 @@ public class UserDataService {
         return "redirect:/login?signupSuccess";
     }
 
-	public String resetPassword(Model model, String username, String securityQuestion, String securityAnswer,
-			String newPassword, String confirmNewPassword) {
-		UserData userData = userDataRepository.findByUsername(username);
+	@Transactional
+	public String resetPassword(Model model, UserDataDTO userDataDTO) {
+		
+		UserData userData = userDataRepository.findByUsername(userDataDTO.getUsername());
+		String errorMsg = "";
+        errorMsg = validateResetPassword(model,userData,userDataDTO);
         
-        if (userData == null) {
+        if(!errorMsg.equals("")) {
         	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "User not found.");
+            model.addAttribute("forgotPasswordError", errorMsg);
             model.addAttribute("showForgotModal", true);
             return "login";
         }
-
-        if (!userData.getSecurityQuestion().equalsIgnoreCase(securityQuestion) ||
-            !userData.getSecurityAnswer().equalsIgnoreCase(securityAnswer)) {
-        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "Security question/answer do not match.");
-            model.addAttribute("showForgotModal", true);
-            return "login";
-        }
-
-        if (!newPassword.equals(confirmNewPassword)) {
-        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "Passwords did not match.");
-            model.addAttribute("showForgotModal", true);
-            return "login";
-        }
-
-        userData.setPassword(passwordEncoder.encode(newPassword)); // Use encoder in real use
+		
+        userData.setPassword(passwordEncoder.encode(userDataDTO.getPassword())); // Use encoder in real use
         userDataRepository.save(userData);
 
         model.addAttribute("forgotPasswordSuccess", "Password reset successful.");
@@ -114,6 +101,24 @@ public class UserDataService {
         }
         
 		return "";
+	}
+	
+	private String validateResetPassword(Model model, UserData userData, UserDataDTO userDataDTO) {
+		
+		if (userData == null) {
+        	return "User not found.";  
+        }
+        if (!userData.getSecurityQuestion().equalsIgnoreCase(userDataDTO.getSecurityQuestion())) {
+        	return "Security question/answer do not match.";
+        }
+        if (!userData.getSecurityAnswer().equalsIgnoreCase(userDataDTO.getSecurityAnswer())) {
+            	return "Security question/answer do not match.";
+            }
+        if (!userDataDTO.getPassword().equals(userDataDTO.getConfirmPassword())) {
+        	return "Passwords did not match.";
+        }
+        
+        return "";
 	}
 
 
@@ -159,7 +164,6 @@ public class UserDataService {
 			 return pageConstants.DASHBOARD_PAGE; // maps to dashboard.html in /templates
 		}
 	}
-
 
 
 	

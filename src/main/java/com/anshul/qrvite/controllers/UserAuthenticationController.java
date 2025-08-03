@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anshul.qrvite.constants.PageConstants;
 import com.anshul.qrvite.dto.UserDataDTO;
-import com.anshul.qrvite.model.UserData;
 import com.anshul.qrvite.repository.UserDataRepository;
 import com.anshul.qrvite.service.UserDataService;
 
@@ -62,7 +61,13 @@ public class UserAuthenticationController {
             @RequestParam String newPassword,
             @RequestParam String confirmNewPassword,
             Model model) {
-    	return userDataService.resetPassword(model,username,securityQuestion,securityAnswer,newPassword,confirmNewPassword);
+    	UserDataDTO userDataDTO = new UserDataDTO();
+    	userDataDTO.setUsername(username);
+    	userDataDTO.setSecurityQuestion(securityQuestion);
+    	userDataDTO.setSecurityAnswer(securityAnswer);
+    	userDataDTO.setPassword(newPassword);
+    	userDataDTO.setConfirmPassword(confirmNewPassword);
+    	return userDataService.resetPassword(model,userDataDTO);
     }
 
 

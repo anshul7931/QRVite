@@ -146,7 +146,7 @@
     </div>
 
     <div class="qr">
-      <img th:src="@{/generate-qr(data=${qrData}, size=300,color=bw)}" alt="QR Code for RSVP or Wedding Site">
+      <img th:src="@{/generate-qr(data=${qrData}, size=${qrSize},color=${qrColor})}" alt="QR Code for RSVP or Wedding Site">
       <p>Scan for RSVP or more details</p>
     </div>
 

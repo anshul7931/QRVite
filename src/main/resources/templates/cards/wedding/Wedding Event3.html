@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 	    <div class="footer" th:if="${footerText != null}" th:text="${footerText}"></div>
 	
-	    <img th:if="${qrData != null}" th:src="@{/generate-qr(data=${qrData}, size=300,color=gradient)}" alt="QR Code" class="qr">
+	    <img th:if="${qrData != null}" th:src="@{/generate-qr(data=${qrData}, size=${qrSize},color=${qrColor})}" alt="QR Code" class="qr">
 	</div>
 
 </body>

@@ -76,6 +76,7 @@ public class UserDataService {
         userData.setPassword(passwordEncoder.encode(userDataDTO.getPassword())); // Use encoder in real use
         userDataRepository.save(userData);
 
+        model.addAttribute("securityQuestions", pageConstants.getQuestions());
         model.addAttribute("forgotPasswordSuccess", "Password reset successful.");
         model.addAttribute("showForgotModal", true);
         return "login";
@@ -96,13 +97,12 @@ public class UserDataService {
         if (!userDataDTO.getPassword().equals(userDataDTO.getConfirmPassword())) {
             return "Passwords do not match.";
         }
-        if(userDataDTO.getPassword().length()<8) {
-        	return "Minimum length of password is 8";
-        }
         
-		return "";
+        return validatePassword(userDataDTO.getPassword());
+        
 	}
 	
+
 	private String validateResetPassword(Model model, UserData userData, UserDataDTO userDataDTO) {
 		
 		if (userData == null) {
@@ -118,10 +118,23 @@ public class UserDataService {
         	return "Passwords did not match.";
         }
         
-        return "";
+        return validatePassword(userDataDTO.getPassword());
 	}
 
 
+	private String validatePassword(String password) {
+		if(password.length()<8) {
+        	return "Minimum length of password is 8";
+        }
+		if(!password.contains("@")) {
+			return "Password must contain @";
+		}
+		
+		//Password must contain a 
+		//On /forgot-password api call, /login should be called
+        
+		return "";
+	}
 	/* Post Login */
 
 	public String getDashboardPage(Model model) {

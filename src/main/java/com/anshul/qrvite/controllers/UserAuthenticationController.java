@@ -52,6 +52,13 @@ public class UserAuthenticationController {
     public String processSignUp(@ModelAttribute("userDataDTO") UserDataDTO userDataDTO,Model model) {
         return userDataService.registerUser(userDataDTO, model);
     }
+    
+    @GetMapping("/forgot-password")
+    public String forgotPassword(Model model){
+    	model.addAttribute("securityQuestions", pageConstants.getQuestions());
+	    model.addAttribute("showForgotModal", false); // default false
+        return "redirect:/login";
+    }
 	
     @PostMapping("/forgot-password")
     public String handleForgotPassword(

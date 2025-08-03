@@ -3,7 +3,6 @@ package com.anshul.qrvite.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +38,7 @@ public class UserDataController {
 	//QR modify for center logo
 	//Login->Logout->Sign Up-> Back Button is opening Dashboard instead of Login
 	//Dashboard is loading after logout and back button click
-	//Login as admin, click back -> 404
+
 	
 	//TODO Remove this UserDetail API - Create DTO
 	@GetMapping("/admin/getAllUsers")

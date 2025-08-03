@@ -1,6 +1,5 @@
 package com.anshul.qrvite.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -27,6 +27,9 @@ public class UserDataService {
 	
 	@Autowired
 	PageConstants pageConstants;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	/* Pre-Login - Authentication */
@@ -48,8 +51,8 @@ public class UserDataService {
         user.setContact(userDataDTO.getContact());
         user.setSecurityQuestion(userDataDTO.getSecurityQuestion());
         user.setSecurityAnswer(userDataDTO.getSecurityAnswer());
-//        user.setPassword(passwordEncoder.encode(userDataDTO.getPassword()));
-        user.setPassword(userDataDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDataDTO.getPassword()));
+//        user.setPassword(userDataDTO.getPassword());
         user.setRole("USER");
 
         userDataRepository.save(user);
@@ -57,7 +60,39 @@ public class UserDataService {
         return "redirect:/login?signupSuccess";
     }
 
-	
+	public String resetPassword(Model model, String username, String securityQuestion, String securityAnswer,
+			String newPassword, String confirmNewPassword) {
+		UserData userData = userDataRepository.findByUsername(username);
+        
+        if (userData == null) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
+            model.addAttribute("forgotPasswordError", "User not found.");
+            model.addAttribute("showForgotModal", true);
+            return "login";
+        }
+
+        if (!userData.getSecurityQuestion().equalsIgnoreCase(securityQuestion) ||
+            !userData.getSecurityAnswer().equalsIgnoreCase(securityAnswer)) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
+            model.addAttribute("forgotPasswordError", "Security question/answer do not match.");
+            model.addAttribute("showForgotModal", true);
+            return "login";
+        }
+
+        if (!newPassword.equals(confirmNewPassword)) {
+        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
+            model.addAttribute("forgotPasswordError", "Passwords did not match.");
+            model.addAttribute("showForgotModal", true);
+            return "login";
+        }
+
+        userData.setPassword(passwordEncoder.encode(newPassword)); // Use encoder in real use
+        userDataRepository.save(userData);
+
+        model.addAttribute("forgotPasswordSuccess", "Password reset successful.");
+        model.addAttribute("showForgotModal", true);
+        return "login";
+	}
 
 	private String validateSignUpData(UserDataDTO userDataDTO, Model model) {
 
@@ -124,6 +159,10 @@ public class UserDataService {
 			 return pageConstants.DASHBOARD_PAGE; // maps to dashboard.html in /templates
 		}
 	}
+
+
+
+	
 	
 
 }

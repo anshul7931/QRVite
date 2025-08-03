@@ -28,6 +28,7 @@ public class UserAuthenticationController {
 	@Autowired
 	UserDataService userDataService;
 	
+	
 	@GetMapping("/login")
     public String login(Model model,Authentication authentication) {
 		//If user is on dashboard and clicks back, he should not navigate to login screen
@@ -61,37 +62,7 @@ public class UserAuthenticationController {
             @RequestParam String newPassword,
             @RequestParam String confirmNewPassword,
             Model model) {
-
-        UserData userData = userDataRepository.findByUsername(username);
-        
-        if (userData == null) {
-        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "User not found.");
-            model.addAttribute("showForgotModal", true);
-            return "login";
-        }
-
-        if (!userData.getSecurityQuestion().equalsIgnoreCase(securityQuestion) ||
-            !userData.getSecurityAnswer().equalsIgnoreCase(securityAnswer)) {
-        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "Security question/answer do not match.");
-            model.addAttribute("showForgotModal", true);
-            return "login";
-        }
-
-        if (!newPassword.equals(confirmNewPassword)) {
-        	model.addAttribute("securityQuestions", pageConstants.getQuestions());
-            model.addAttribute("forgotPasswordError", "Passwords did not match.");
-            model.addAttribute("showForgotModal", true);
-            return "login";
-        }
-
-        userData.setPassword(newPassword); // Use encoder in real use
-        userDataRepository.save(userData);
-
-        model.addAttribute("forgotPasswordSuccess", "Password reset successful.");
-        model.addAttribute("showForgotModal", true);
-        return "login";
+    	return userDataService.resetPassword(model,username,securityQuestion,securityAnswer,newPassword,confirmNewPassword);
     }
 
 
